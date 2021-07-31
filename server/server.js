@@ -1,17 +1,19 @@
-const express = require('express')
-const cors = require('cors')
-const path = require('path')
+import express from 'express'
+import cors from 'cors'
+import path from 'path'
+import contactsRouter from './contacts/contactsRouter.js'
+
 const app = express()
 const PORT = process.env.PORT || 8080
 
 app.use(cors())
+app.use(express.json())
 
-const root = path.resolve(__dirname, '../', 'client', 'build')
-app.use(express.static(root))
+// console.log('path.resolve():', path.resolve())
+// app.use(express.static(path.resolve(path.resolve(), '../', 'client', 'build')))
 
-app.get('*', (req, res) => {
-	res.sendFile('index.html')
-})
+app.use(contactsRouter)
+
 app.listen(PORT, () => {
 	console.log('server has been started...')
 })

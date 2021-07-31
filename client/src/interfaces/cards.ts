@@ -9,5 +9,3 @@ export interface iContact extends iFormData {
 }
 
 export type contactFuncType = (id: string) => void
-
-// useReducer and useContext

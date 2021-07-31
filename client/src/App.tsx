@@ -1,8 +1,9 @@
-import { nanoid } from '@reduxjs/toolkit'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card } from './components/Card'
 import { contactFuncType, iContact, iFormData } from './interfaces/cards'
-import './App.css'
+import './assets/scss/App.scss'
+import { request } from './API/contactsAPI'
+import { CardLoader } from './components/CardLoader'
 
 export const App: React.FC = () => {
   const [formData, setFormData] = useState<iFormData>({
@@ -10,6 +11,19 @@ export const App: React.FC = () => {
     value: ''
   })
   const [contacts, setContacts] = useState<iContact[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    setLoading(true)
+    request('http://localhost:8080/api/contacts').then((data: any) => {
+      setContacts(data)
+      setLoading(false)
+    })
+  }, [])
+
+  const canCreate = (): boolean => {
+    return !!formData.name.trim() && !!formData.value.trim()
+  }
 
   const inputHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
@@ -18,33 +32,37 @@ export const App: React.FC = () => {
     }))
   }
   
-  const sendForm = (event: React.FormEvent) => {
+  const sendForm = async (event: React.FormEvent) => {
     event.preventDefault()
-    if (formData.name && formData.value) {
-      setContacts(prev => ([
-        ...prev,
-        {
-          id: nanoid(),
-          marked: false,
-          ...formData
-        }
-      ]))
-      setFormData(prev => ({name: '', value: ''}))
-    }
+
+    const newContact = await request('http://localhost:8080/api/contacts', 'POST', formData)
+
+    setContacts(prev => ([
+      ...prev,
+      newContact
+    ]))
+    setFormData(prev => ({name: '', value: ''}))
   }
 
-  const markContact: contactFuncType = id => {
-    setContacts(prev => prev.map(contact => {
-      if (contact.id === id) contact.marked = !contact.marked
-      return contact
-    }))
+  const markContact: contactFuncType = async id => {
+    const contact = contacts.find(c => c.id === id)
+    await request(`http://localhost:8080/api/contacts/${id}`, "PUT", {
+      ...contact,
+      marked: !contact!.marked
+    }).then((newContact: any) => {
+      setContacts(prev => prev.map(c => {
+        if (c.id === newContact.id) c.marked = newContact.marked
+        return c
+      }))
+    })
   }
 
-  const removeContact: contactFuncType = id => {
-    setContacts(prev => prev.filter(contact => contact.id !== id))
+  const removeContact: contactFuncType = async id => {
+    await request(`http://localhost:8080/api/contacts/${id}`, "DELETE").then((data: any) => {
+      console.log(data.message)
+      setContacts(prev => prev.filter(c => c.id !== id))
+    })
   }
-
-  // console.log('contacts:', contacts)
 
   return (
     <div className="container pt-3">
@@ -75,18 +93,25 @@ export const App: React.FC = () => {
             className="form-control"
           />
         </div>
-        <button type="submit" className="btn btn-primary">Create</button>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={!canCreate()}
+        >Create</button>
       </form>
 
-        {!contacts.length && <p>There are no contacts!</p>}
-        {contacts.map(contact => {
-          return <Card
-            contact={contact}
-            markContact={markContact}
-            key={contact.id}
-            removeContact={removeContact}
-          />
-        })}
+      {
+        contacts.length ? (
+          contacts.map(contact => {
+            return <Card
+              contact={contact}
+              markContact={markContact}
+              key={contact.id}
+              removeContact={removeContact}
+            />
+          })
+        ) : (loading ? <CardLoader /> : <p>There are no contacts!</p>)
+      }
     </div>
   )
 }
