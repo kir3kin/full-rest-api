@@ -1,19 +1,24 @@
 import express from 'express'
 import cors from 'cors'
-import path from 'path'
-import contactsRouter from './contacts/contactsRouter.js'
+import http from 'http'
+
+import contactsRouter from './routes/contactsRouter.js'
+import { dbConnect } from './db/config.js'
 
 const app = express()
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 3048
 
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-// console.log('path.resolve():', path.resolve())
-// app.use(express.static(path.resolve(path.resolve(), '../', 'client', 'build')))
-
+dbConnect()
 app.use(contactsRouter)
 
-app.listen(PORT, () => {
+const httpServer = http.createServer(app)
+
+
+
+httpServer.listen(PORT, () => {
 	console.log('server has been started...')
 })

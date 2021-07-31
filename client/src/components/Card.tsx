@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { contactFuncType, iContact } from "../interfaces/cards"
 
 type contactProps = {
@@ -18,19 +18,19 @@ export const Card: React.FC<contactProps> = ({
 
 	return (
 		<div className="card mb-3">
-			<div className="card-body" key={contact.id}>
+			<div className="card-body" key={contact._id}>
 				<h5
 					className={titleClasses.join(' ')}
 				>{contact.name}</h5>
 				<p className="card-text">{contact.value}</p>
 				<button
 					className="btn btn-primary"
-					onClick={() => markContact(contact.id)}
+					onClick={() => markContact(contact._id)}
 				>Mark</button>
 				<button
 					disabled={contact.marked}
 					className="btn btn-danger"
-					onClick={() => removeContact(contact.id)}
+					onClick={() => removeContact(contact._id)}
 				>Delete</button>
 			</div>
 		</div>

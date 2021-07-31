@@ -7,7 +7,7 @@ type requestType = (
 export const request: requestType = async (url, method = "GET", data = null) => {
 	try {
 		let body
-
+// eslint-disable-next-line
 		const headers = <{['Content-Type']: string}>{} 
 		if (data) {
 			headers['Content-Type'] = 'application/json'

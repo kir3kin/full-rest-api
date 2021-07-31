@@ -4,7 +4,7 @@ export interface iFormData {
 }
 
 export interface iContact extends iFormData {
-  id: string
+  _id: string
   marked: boolean
 }
 

@@ -15,8 +15,8 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     setLoading(true)
-    request('http://localhost:8080/api/contacts').then((data: any) => {
-      setContacts(data)
+    request('http://localhost:3048/api/contacts').then((allContacts: any) => {
+      setContacts(allContacts)
       setLoading(false)
     })
   }, [])
@@ -35,32 +35,32 @@ export const App: React.FC = () => {
   const sendForm = async (event: React.FormEvent) => {
     event.preventDefault()
 
-    const newContact = await request('http://localhost:8080/api/contacts', 'POST', formData)
-
-    setContacts(prev => ([
-      ...prev,
-      newContact
-    ]))
+    await request('http://localhost:3048/api/contacts', 'POST', formData).then((nContact: any) => {
+      setContacts(prev => ([
+        ...prev,
+        nContact
+      ]))
+    })
     setFormData(prev => ({name: '', value: ''}))
   }
 
   const markContact: contactFuncType = async id => {
-    const contact = contacts.find(c => c.id === id)
-    await request(`http://localhost:8080/api/contacts/${id}`, "PUT", {
+    const contact = contacts.find(c => c._id === id)
+    await request(`http://localhost:3048/api/contacts/${id}`, "PUT", {
       ...contact,
       marked: !contact!.marked
     }).then((newContact: any) => {
       setContacts(prev => prev.map(c => {
-        if (c.id === newContact.id) c.marked = newContact.marked
+        if (c._id === newContact._id) c.marked = newContact.marked
         return c
       }))
     })
   }
 
   const removeContact: contactFuncType = async id => {
-    await request(`http://localhost:8080/api/contacts/${id}`, "DELETE").then((data: any) => {
+    await request(`http://localhost:3048/api/contacts/${id}`, "DELETE").then((data: any) => {
       console.log(data.message)
-      setContacts(prev => prev.filter(c => c.id !== id))
+      setContacts(prev => prev.filter(c => c._id !== id))
     })
   }
 
@@ -106,7 +106,7 @@ export const App: React.FC = () => {
             return <Card
               contact={contact}
               markContact={markContact}
-              key={contact.id}
+              key={contact._id}
               removeContact={removeContact}
             />
           })
