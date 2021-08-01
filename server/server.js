@@ -17,8 +17,6 @@ app.use(contactsRouter)
 
 const httpServer = http.createServer(app)
 
-
-
 httpServer.listen(PORT, () => {
 	console.log('server has been started...')
 })

@@ -1,8 +1,10 @@
 /*
 TODO:
+! AddContact EditContact ContactsList
+! Axios
 ! images
-! useMemo &/| useCallback
-! MongoDB
-? useReducer and useContext
-? GraphQL
+! useReducer and useContext
+! useMemo &| useCallback
+! GraphQL
+! add server validation after MERN
 */

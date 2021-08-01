@@ -12,12 +12,11 @@ export const createContact = async (req, res) => {
 }
 
 export const updateContact = async (req, res) => {
-	const filter = {_id: req.params.id}
-	const update = {...req.body}
-	const contact = await Contacts.findOneAndUpdate(filter, update, {
-		new: true
-	})
-	res.status(200).json(contact)
+	const contact = await Contacts.findById(req.params.id)
+	contact.name = req.body.name
+	contact.email = req.body.email
+	const uContact = await contact.save()
+	res.status(200).json(uContact)
 }
 
 export const deleteContact = async (req, res) => {
