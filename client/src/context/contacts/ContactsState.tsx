@@ -25,6 +25,15 @@ export const ContactsState: React.FC = ({ children }) => {
 		})
 	}
 
+	const fetchContactById = async(id: string) => {
+		const contact = await axios.get(`http://localhost:3048/api/contacts/${id}`).then(result => {
+			const payload = result.data
+			dispatch({type: 'FETCH_CONTACT', payload})
+			return payload
+		})
+		return contact
+	}
+
 	const updateContact = async (uContact: iContact) => {
 		const res = await axios.put(`http://localhost:3048/api/contacts/${uContact._id}`, uContact)
 		const payload = res.data 
@@ -47,7 +56,6 @@ export const ContactsState: React.FC = ({ children }) => {
 	}
 
 
-
 	return (
 		<contactsContext.Provider value={{
 			contacts: state.contacts,
@@ -55,7 +63,8 @@ export const ContactsState: React.FC = ({ children }) => {
 			fetchContacts,
 			removeContact,
 			addContact,
-			updateContact
+			updateContact,
+			fetchContactById
 		}}>
 			{children}
 		</contactsContext.Provider>

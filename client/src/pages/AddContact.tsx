@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { contactsContext } from "../context/contacts/contactsContext"
 import { iContactShort } from "../interfaces/contacts"
 
 export const AddContact: React.FC = () => {
   const { addContact } = useContext(contactsContext)
+  const history = useHistory()
 
 	const [formData, setFormData] = useState<iContactShort>({
     name: '',
@@ -14,7 +15,7 @@ export const AddContact: React.FC = () => {
 	const sendForm = async (event: React.FormEvent) => {
     event.preventDefault()
     addContact(formData)
-    setFormData(prev => ({name: '', email: ''}))
+    history.push('/')
   }
 
 	const canCreate = (): boolean => {
@@ -58,7 +59,7 @@ export const AddContact: React.FC = () => {
             onChange={event => inputHandle(event)}
             id="email"
             name="email"
-            type="text"
+            type="email"
             className="form-control"
           />
           <label htmlFor="email">Email</label>

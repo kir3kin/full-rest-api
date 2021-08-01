@@ -1,22 +1,16 @@
 import React, { useContext } from "react"
-import { contactFuncType, iContact } from "../interfaces/contacts"
+import { iContact } from "../interfaces/contacts"
 import { Trash, PencilSquare } from 'react-bootstrap-icons'
 import { Link } from "react-router-dom"
 import avatar from '../assets/images/avatar-placeholder.png'
 import '../assets/scss/Contact.scss'
 import { contactsContext } from "../context/contacts/contactsContext"
 
-type contactProps = {
-	contact: iContact
-	markContact: contactFuncType
-}
-
-export const Contact: React.FC<contactProps> = ({
-	contact,
-	markContact
+export const Contact: React.FC<{contact: iContact}> = ({
+	contact
 }) => {
 
-	const {removeContact} = useContext(contactsContext)
+	const { removeContact } = useContext(contactsContext)
 
 	return (
 		<div className="card mb-3" key={contact._id}>
@@ -35,10 +29,7 @@ export const Contact: React.FC<contactProps> = ({
 					</div>
 					<div className="col-3 d-flex flex-row justify-content-end">
 						<Link
-							to={{
-								pathname: "/edit-contact",
-								state: contact
-							}}
+							to={`/edit-contact/${contact._id}`}
 							className="btn btn-outline-primary border-0 d-flex align-items-center"
 						><PencilSquare height="2em" width="2em" /></Link>
 						<button

@@ -14,7 +14,7 @@ export const App: React.FC = () => (
       <Switch>
         <Route component={ListContact} path="/" exact />
         <Route component={AddContact} path="/add-contact" />
-        <Route component={EditContact} path="/edit-contact" />
+        <Route component={EditContact} path="/edit-contact/:id" />
       </Switch>
     </BrowserRouter>
   </div>

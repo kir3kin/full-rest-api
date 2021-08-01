@@ -1,10 +1,6 @@
 import { iContact } from "../interfaces/contacts"
 
-export type iContactsActionTypes = 'FETCH_CONTACTS' | 'DEFAULT' | 'SHOW_LOADER' | 'HIDE_LOADER' | 'REMOVE_CONTACT' | 'ADD_CONTACT' | 'UPDATE_CONTACT'
-
-
-
-
+export type iContactsActionTypes = 'FETCH_CONTACTS' | 'DEFAULT' | 'SHOW_LOADER' | 'HIDE_LOADER' | 'REMOVE_CONTACT' | 'ADD_CONTACT' | 'UPDATE_CONTACT' | 'FETCH_CONTACT'
 
 
 export enum ActionType {

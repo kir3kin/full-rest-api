@@ -1,10 +1,8 @@
 import React, { useEffect, useContext } from "react"
 import { Link } from "react-router-dom"
-import { request } from "../API/contactsAPI"
 import { Contact } from "../components/Contact"
 import { ContactsLoader } from "../components/ContactsLoader"
 import { contactsContext } from "../context/contacts/contactsContext"
-import { contactFuncType } from "../interfaces/contacts"
 
 export const ListContact: React.FC = () => {
 
@@ -13,18 +11,6 @@ export const ListContact: React.FC = () => {
   useEffect(() => {
     fetchContacts()
   }, [])
-
-	const markContact: contactFuncType = async id => {
-    const contact = contacts.find(c => c._id === id)
-    await request(`http://localhost:3048/api/contacts/${id}`, "PUT", {
-      ...contact,
-    }).then((newContact: any) => {
-      // setContacts(prev => prev.map(c => {
-      //   if (c._id === newContact._id) c.marked = newContact.marked
-      //   return c
-      // }))
-    })
-  }
 
 	return (
 		<>
@@ -40,7 +26,6 @@ export const ListContact: React.FC = () => {
 					contacts.map(contact => {
 						return <Contact
 							contact={contact}
-							markContact={markContact}
 							key={contact._id}
 						/>
 					})

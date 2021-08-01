@@ -10,6 +10,7 @@ export interface iContactContext {
   removeContact: (id: string) => void
   addContact: (nContact: iContactShort) => void
   updateContact: (uContact: iContact) => void
+  fetchContactById: (id: string) => any
 }
 
 export interface iContactShort {
@@ -20,5 +21,3 @@ export interface iContactShort {
 export interface iContact extends iContactShort {
   _id: string
 }
-
-export type contactFuncType = (id: string) => void
