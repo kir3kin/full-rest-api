@@ -1,7 +1,10 @@
 /*
 TODO:
-! images
-? useMemo &| useCallback
-! GraphQL
-! add server validation after MERN
+! useMemo &| useCallback
+? change REST API to GraphQL
+? images
+? promise.catch() & promiseType instead of try-catch
+! form validation: useFormHook
+! animations:
+	- contacts delete
 */

@@ -2,15 +2,27 @@ import React, { useContext } from "react"
 import { iContact } from "../interfaces/contacts"
 import { Trash, PencilSquare } from 'react-bootstrap-icons'
 import { Link } from "react-router-dom"
-import avatar from '../assets/images/avatar-placeholder.png'
-import '../assets/scss/Contact.scss'
 import { contactsContext } from "../context/contacts/contactsContext"
+import { alertContext } from "../context/alert/alertContext"
+import { alertMessageType, alertText } from "../interfaces/alertContext"
+import '../assets/scss/Contact.scss'
+import avatar from '../assets/images/avatar-placeholder.png'
 
-export const Contact: React.FC<{contact: iContact}> = ({
+
+export const ContactItem: React.FC<{contact: iContact}> = ({
 	contact
 }) => {
-
 	const { removeContact } = useContext(contactsContext)
+  const { show } = useContext(alertContext)
+
+	const contactHandler = (id: string) => {
+		try {
+			removeContact(id)
+			show(alertText.CONTACT_DELETE, alertMessageType.WARN)
+		} catch(e) {
+			show(alertText.CONTACT_DELETE_FAILED, alertMessageType.DANGER)
+		}
+	}
 
 	return (
 		<div className="card mb-3" key={contact._id}>
@@ -34,7 +46,7 @@ export const Contact: React.FC<{contact: iContact}> = ({
 						><PencilSquare height="2em" width="2em" /></Link>
 						<button
 							className="btn btn-outline-danger border-0"
-							onClick={() => removeContact(contact._id)}
+							onClick={() => contactHandler(contact._id)}
 						><Trash height="2em" width="2em" /></button>
 					</div>
 				</div>

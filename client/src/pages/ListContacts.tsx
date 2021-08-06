@@ -1,16 +1,14 @@
-import React, { useEffect, useContext } from "react"
+import React, { useContext } from "react"
 import { Link } from "react-router-dom"
-import { Contact } from "../components/Contact"
+import { ContactItem } from "../components/ContactItem"
 import { ContactsLoader } from "../components/ContactsLoader"
 import { contactsContext } from "../context/contacts/contactsContext"
 
 export const ListContact: React.FC = () => {
 
-  const {contacts, loading, fetchContacts} = useContext(contactsContext)
-  
-  useEffect(() => {
-    fetchContacts()
-  }, [])
+  const { contacts, loading } = useContext(contactsContext)
+
+  	// console.log('contacts:', contacts)
 
 	return (
 		<>
@@ -24,7 +22,7 @@ export const ListContact: React.FC = () => {
 			{
 				contacts.length ? (
 					contacts.map(contact => {
-						return <Contact
+						return <ContactItem
 							contact={contact}
 							key={contact._id}
 						/>

@@ -1,21 +1,31 @@
 import React, { useContext, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
+import { alertContext } from "../context/alert/alertContext"
 import { contactsContext } from "../context/contacts/contactsContext"
+import { alertMessageType, alertText } from "../interfaces/alertContext"
 import { iContactShort } from "../interfaces/contacts"
 
 export const AddContact: React.FC = () => {
   const { addContact } = useContext(contactsContext)
+  const { show } = useContext(alertContext)
   const history = useHistory()
 
-	const [formData, setFormData] = useState<iContactShort>({
+  const defaultFormData = {
     name: '',
     email: ''
-  })
+  }
 
-	const sendForm = async (event: React.FormEvent) => {
+	const [formData, setFormData] = useState<iContactShort>(defaultFormData)
+
+	const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault()
-    addContact(formData)
-    history.push('/')
+    try {
+      addContact(formData)
+      show(alertText.CONTACT_ADD, alertMessageType.SUCCESS)
+    } catch (e) {
+      show(alertText.CONTACT_ADD_FAILED, alertMessageType.DANGER)
+    }
+    setFormData(defaultFormData)
   }
 
 	const canCreate = (): boolean => {
@@ -34,12 +44,15 @@ export const AddContact: React.FC = () => {
 		<div className="row">
 			<h2 className="col-6 mb-0">Add contact</h2>
 			<div className="col-6 d-flex justify-content-end">
-        <Link to='/' className="btn px-3 btn-danger">Back</Link>
+        <button
+          className="btn px-3 btn-danger"
+          onClick={() => { history.goBack() }}
+        >Back</button>
       </div>
 		</div>
     <hr className="my-4" />
 		<form
-        onSubmit={event => sendForm(event)}
+        onSubmit={event => submitHandler(event)}
         className=""
       >
         <div className="form-floating mb-3">

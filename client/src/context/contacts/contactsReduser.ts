@@ -1,45 +1,45 @@
-import { iContactsState } from "../../interfaces/contacts"
-import { iContactsActionTypes } from "../types"
+import { iContactsState } from "../../interfaces/contactsContext"
+import { ActionType, ContactsActions } from "../types/contactsTypes"
 
-type actionType = {
-	type: iContactsActionTypes
-	payload?: any
-}
-
-type actionFuncType = (state: iContactsState, action: actionType) => any
-type handlersType = Record<iContactsActionTypes, actionFuncType>
-
-const handlers: handlersType = {
-	FETCH_CONTACTS: (state, {payload}) => ({...state, contacts: payload}),
-	FETCH_CONTACT: (state, {payload}) => ({...state, contacts: [payload]}),
-	ADD_CONTACT: (state, {payload}) => ({
-		contacts: [
-			...state.contacts,
-			payload
-		]
-	}),
-	REMOVE_CONTACT: (state, {payload}) => ({
-		...state,
-		contacts: state.contacts.filter(contact => contact._id !== payload)
-	}),
-	UPDATE_CONTACT: (state, {payload}) => {
-		return {
-			...state,
-			contacts: [
-			// change into map
-			...state.contacts.filter(contact => contact._id !== payload._id),
-			{...state.contacts.find(contact => contact._id === payload._id), ...payload}
-		]
+export const contactsReducer = (
+	state: iContactsState,
+	action: ContactsActions
+): iContactsState => {
+	switch (action.type) {
+		case ActionType.FETCH_CONTACTS: {
+			return { ...state, contacts: action.payload }
 		}
-	},
-	SHOW_LOADER: (state) => ({...state, loading: true}),
-	HIDE_LOADER: (state) => ({...state, loading: false}),
-	DEFAULT: state => state
-}
-
-type contactsReduserType = (state: iContactsState, action: actionType) => any
-
-export const contactsReducer: contactsReduserType = (state, action) => {
-	const handle = handlers[action.type] || handlers.DEFAULT
-	return handle(state, action)
+		case ActionType.ADD_CONTACT: {
+			return {
+				...state,
+				contacts: [
+					...state.contacts,
+					action.payload
+				]
+			}
+		}
+		case ActionType.REMOVE_CONTACT: {
+			return {
+				...state,
+				contacts: state.contacts.filter(contact => contact._id !== action.payload)
+			}
+		}
+		case ActionType.UPDATE_CONTACT: {
+			return {
+				...state,
+				contacts: state.contacts.map(contact => {
+					if (contact._id === action.payload._id)
+						return { ...contact, ...action.payload }
+					return contact
+				})
+			}
+		}
+		case ActionType.SHOW_LOADER: {
+			return { ...state, loading: true }
+		}
+		case ActionType.HIDE_LOADER: {
+			return { ...state, loading: false }
+		}
+		default: return state
+	}
 }

@@ -1,0 +1,14 @@
+.alert-transition-enter {
+  opacity: 0;
+}
+
+.alert-transition-enter-active {
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+}
+
+.alert-transition-exit-active {
+  opacity: 0;
+  transition: opacity .35s ease-in-out;
+  
+}

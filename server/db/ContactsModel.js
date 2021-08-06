@@ -9,10 +9,6 @@ const schema = new Schema({
 	email: {
 		type: String,
 		required: true
-	},
-	marked: {
-		type: Boolean,
-		default: false
 	}
 })
 export const Contacts = model('Contacts', schema)

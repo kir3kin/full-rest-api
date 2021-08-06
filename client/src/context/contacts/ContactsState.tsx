@@ -1,70 +1,74 @@
 import React, { useReducer } from "react"
+import axios from 'axios'
 import { contactsReducer } from "./contactsReduser"
 import { contactsContext } from "./contactsContext"
-import { iContact, iContactShort, iContactsState } from "../../interfaces/contacts"
-import axios from 'axios'
+import { iContact, iContactShort } from "../../interfaces/contacts"
+import { iContactsState } from "../../interfaces/contactsContext"
+import { ActionType } from "../types/contactsTypes"
+
+const URL = 'http://localhost:3048/api/contacts'
 
 export const ContactsState: React.FC = ({ children }) => {
 	const initialContactsState: iContactsState = {
 		contacts: [],
+		editContact: {} as iContact,
 		loading: false
 	}
 
 	const [state, dispatch] = useReducer(contactsReducer, initialContactsState)
 
-	const showLoader = () => dispatch({type: 'SHOW_LOADER'})
-	const hideLoader = () => dispatch({type: 'HIDE_LOADER'})
+	const showLoader = () => dispatch({type: ActionType.SHOW_LOADER})
+	const hideLoader = () => dispatch({type: ActionType.HIDE_LOADER})
 
-	// add actions interfaces
 	const fetchContacts = async () => {
 		showLoader()
-		await axios.get('http://localhost:3048/api/contacts').then(result => {
-			const payload = result.data
-			dispatch({type: 'FETCH_CONTACTS', payload})
+		await axios.get<iContact[]>(URL).then(response => {
+			const payload = response.data
+			dispatch({type: ActionType.FETCH_CONTACTS, payload})
 			hideLoader()
 		})
 	}
 
-	const fetchContactById = async(id: string) => {
-		const contact = await axios.get(`http://localhost:3048/api/contacts/${id}`).then(result => {
-			const payload = result.data
-			dispatch({type: 'FETCH_CONTACT', payload})
-			return payload
-		})
-		return contact
-	}
-
 	const updateContact = async (uContact: iContact) => {
-		const res = await axios.put(`http://localhost:3048/api/contacts/${uContact._id}`, uContact)
-		const payload = res.data 
-		dispatch({type: "UPDATE_CONTACT", payload})
+		try {
+			const nContact = await axios.put<iContact>(`${URL}/${uContact._id}`, uContact)
+			const payload = nContact.data
+			dispatch({type: ActionType.UPDATE_CONTACT, payload})
+		} catch(e) {
+			throw new Error(e)
+		}
 	}
 
-	const addContact = async (nContact: iContactShort) => {
-		const res = await axios.post('http://localhost:3048/api/contacts', nContact)
-		const payload = res.data
-		dispatch({type: "ADD_CONTACT", payload})
+	const addContact = async (aContact: iContactShort) => {
+		try {
+			const nContact = await axios.post<iContact>(URL, aContact)
+			const payload = nContact.data
+			dispatch({type: ActionType.ADD_CONTACT, payload})
+		} catch(e) {
+			throw new Error(e)
+		}
+
 	}
 
 	const removeContact = async (id: string) => {
-		await axios.delete(`http://localhost:3048/api/contacts/${id}`).then(() => {
-			dispatch({
-				type: 'REMOVE_CONTACT',
-				payload: id
+		try {
+			await axios.delete(`${URL}/${id}`).then(() => {
+				dispatch({type: ActionType.REMOVE_CONTACT, payload: id})
 			})
-		})
+		} catch(e) {
+			throw new Error(e)
+		}
 	}
-
 
 	return (
 		<contactsContext.Provider value={{
 			contacts: state.contacts,
 			loading: state.loading,
+			editContact: state.editContact,
 			fetchContacts,
 			removeContact,
 			addContact,
-			updateContact,
-			fetchContactById
+			updateContact
 		}}>
 			{children}
 		</contactsContext.Provider>
