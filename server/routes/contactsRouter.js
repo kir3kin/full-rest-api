@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { dbConnect } from '../db/config.js'
 import {
 	getContacts,
 	createContact,
@@ -7,10 +6,6 @@ import {
 	updateContact,
 	getContact
 } from '../controllers/contactsController.js'
-
-
-dbConnect()
-
 
 const router = Router()
 router.get('/api/contacts', getContacts)

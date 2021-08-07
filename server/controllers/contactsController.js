@@ -1,4 +1,6 @@
 import { Contacts } from '../db/ContactsModel.js'
+import { dbConnect } from '../db/config.js'
+dbConnect()
 
 export const getContacts = async (req, res) => {
 	const all = await Contacts.find({})

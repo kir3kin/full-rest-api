@@ -5,7 +5,6 @@ import { Link } from "react-router-dom"
 import { contactsContext } from "../context/contacts/contactsContext"
 import { alertContext } from "../context/alert/alertContext"
 import { alertMessageType, alertText } from "../interfaces/alertContext"
-import '../assets/scss/Contact.scss'
 import avatar from '../assets/images/avatar-placeholder.png'
 
 

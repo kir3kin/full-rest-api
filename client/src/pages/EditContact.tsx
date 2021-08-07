@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Link, useHistory, useParams } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { ContactsLoader } from "../components/ContactsLoader"
 import { EditContactItem } from "../components/EditContactItem"
 import { contactsContext } from "../context/contacts/contactsContext"

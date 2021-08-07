@@ -34,7 +34,13 @@ export const EditContactItem: React.FC<editContactItemProps> = ({
 
 	// some kind of validation
 	const canUpdate = (): boolean => {
-		return !!contact.name.trim() && !!contact.email.trim()
+		return !!contact.name.trim() &&
+		!!contact.email.trim() &&
+		(
+			contact.name !== edContact.name ||
+			contact.email !== edContact.email
+		) &&
+		(contact.name.length <= 20)
 	}
 	return (
 		<>

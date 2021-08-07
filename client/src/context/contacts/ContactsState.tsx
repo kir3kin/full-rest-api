@@ -11,7 +11,6 @@ const URL = 'http://localhost:3048/api/contacts'
 export const ContactsState: React.FC = ({ children }) => {
 	const initialContactsState: iContactsState = {
 		contacts: [],
-		editContact: {} as iContact,
 		loading: false
 	}
 
@@ -25,10 +24,12 @@ export const ContactsState: React.FC = ({ children }) => {
 		await axios.get<iContact[]>(URL).then(response => {
 			const payload = response.data
 			dispatch({type: ActionType.FETCH_CONTACTS, payload})
+			
 			hideLoader()
 		})
 	}
 
+	// todo: add return type = promise
 	const updateContact = async (uContact: iContact) => {
 		try {
 			const nContact = await axios.put<iContact>(`${URL}/${uContact._id}`, uContact)
@@ -64,7 +65,6 @@ export const ContactsState: React.FC = ({ children }) => {
 		<contactsContext.Provider value={{
 			contacts: state.contacts,
 			loading: state.loading,
-			editContact: state.editContact,
 			fetchContacts,
 			removeContact,
 			addContact,

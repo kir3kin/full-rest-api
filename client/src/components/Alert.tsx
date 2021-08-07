@@ -17,8 +17,8 @@ export const Alert: React.FC = () => {
 		<CSSTransition
 			in={alert.visible}
 			timeout={{
-				enter: 500,
-				exit: 350
+				enter: 400,
+				exit: 200
 			}}
 			classNames={'alert-transition'}
 			mountOnEnter
@@ -28,7 +28,7 @@ export const Alert: React.FC = () => {
 				className={`alert alert-${alert.type} alert-dismissible text-center`}
 				role="alert"
 			>
-				{(alert.type === 'danger') ? (
+				{(alert.type === 'danger' || alert.type === 'warning') ? (
 					<ExclamationTriangleFill {...iconParams} />
 				) : (
 					<CheckCircleFill {...iconParams} />

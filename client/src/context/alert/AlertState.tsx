@@ -10,7 +10,7 @@ export const AlertState: React.FC = ({ children }) => {
 		text: alertText.DEFAULT,
 		type: alertMessageType.DEFAULT
 	}
-	const ALERT_LIVE_TIME = 2000
+	const ALERT_LIVE_TIME = 1500
 
 	const [state, dispatch] = useReducer(alertReducer, initialAlertState)
 

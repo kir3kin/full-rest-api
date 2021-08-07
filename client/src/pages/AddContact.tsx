@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import { alertContext } from "../context/alert/alertContext"
 import { contactsContext } from "../context/contacts/contactsContext"
 import { alertMessageType, alertText } from "../interfaces/alertContext"
@@ -27,9 +27,11 @@ export const AddContact: React.FC = () => {
     }
     setFormData(defaultFormData)
   }
-
+  
+  
 	const canCreate = (): boolean => {
-    return !!formData.name.trim() && !!formData.email.trim()
+    return !!formData.name.trim() && !!formData.email.trim() &&
+    (formData.name.length <= 20)
   }
 
 	const inputHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
