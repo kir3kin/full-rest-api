@@ -6,7 +6,7 @@ import { iContact, iContactShort } from "../../interfaces/contacts"
 import { iContactsState } from "../../interfaces/contactsContext"
 import { ActionType } from "../types/contactsTypes"
 
-const URL = 'http://localhost:3048/api/contacts'
+const URL = 'http://localhost:3040/api/contacts'
 
 export const ContactsState: React.FC = ({ children }) => {
 	const initialContactsState: iContactsState = {
@@ -29,7 +29,6 @@ export const ContactsState: React.FC = ({ children }) => {
 		})
 	}
 
-	// todo: add return type = promise
 	const updateContact = async (uContact: iContact) => {
 		try {
 			const nContact = await axios.put<iContact>(`${URL}/${uContact._id}`, uContact)
@@ -48,7 +47,6 @@ export const ContactsState: React.FC = ({ children }) => {
 		} catch(e) {
 			throw new Error(e)
 		}
-
 	}
 
 	const removeContact = async (id: string) => {
