@@ -19,8 +19,14 @@ import {
 	updateContactDataType
 } from "../../interfaces/gqlContactsDataTypes"
 
+const SERVERS = {
+	'LOCALHOST': 'http://localhost:3040/api/gqlContacts',
+	'HTTPS':     'https://188.68.221.195:3043/api/gqlContacts',
+	'HTTP':      'http://188.68.221.195:3040/api/gqlContacts'
+}
+
 const axiosParams: AxiosParamsType = {
-	url: 'http://localhost:3040/api/gqlContacts',
+	url: SERVERS['HTTPS'],
 	method: 'POST',
 	headers: {
 		'Content-Type': 'application/json',

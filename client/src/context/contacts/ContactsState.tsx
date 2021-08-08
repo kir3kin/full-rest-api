@@ -6,7 +6,12 @@ import { iContact, iContactShort } from "../../interfaces/contacts"
 import { iContactsState } from "../../interfaces/contactsContext"
 import { ActionType } from "../types/contactsTypes"
 
-const URL = 'http://localhost:3040/api/contacts'
+const SERVERS = {
+	'LOCALHOST': 'http://localhost:3040/api/contacts',
+	'HTTPS':     'https://188.68.221.195:3043/api/contacts',
+	'HTTP':      'http://188.68.221.195:3040/api/contacts'
+}
+const URL = SERVERS['HTTPS']
 
 export const ContactsState: React.FC = ({ children }) => {
 	const initialContactsState: iContactsState = {
