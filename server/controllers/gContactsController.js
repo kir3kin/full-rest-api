@@ -1,5 +1,5 @@
 import { Contacts } from '../db/ContactsModel.js'
-import { dbConnect } from '../db/config.js'
+import { dbConnect } from '../db/conf.js'
 dbConnect()
 
 export const getContacts = async () =>
