@@ -11,8 +11,6 @@ export const ListContact: React.FC = () => {
 
   const { contacts, loading } = useContext(contactsContext)
 
-  	// console.log('contacts:', contacts)
-
 	return (
 		<>
       <div className="row">
