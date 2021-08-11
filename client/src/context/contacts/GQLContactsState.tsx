@@ -21,7 +21,7 @@ import {
 
 const SERVERS = {
 	'LOCALHOST': 'http://localhost:3040/api/gqlContacts',
-	'HTTPS':     'https://kir3kin.pp.ua:3043/api/gqlContacts'
+	'HTTPS':     'https://albal.fun:3043/api/gqlContacts'
 }
 
 const axiosParams: AxiosParamsType = {
