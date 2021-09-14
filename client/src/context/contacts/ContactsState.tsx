@@ -8,8 +8,8 @@ import { ActionType } from "../types/contactsTypes"
 
 const SERVERS = {
 	'LOCALHOST': 'http://localhost:3040/api/contacts',
-	'HTTPS':     'https://188.68.221.195:3043/api/contacts',
-	'HTTP':      'http://188.68.221.195:3040/api/contacts'
+	'HTTPS':     'https://albal.fun:3043/api/contacts',
+	'HTTP':      'http://albal.fun:3040/api/contacts'
 }
 const URL = SERVERS['HTTPS']
 
