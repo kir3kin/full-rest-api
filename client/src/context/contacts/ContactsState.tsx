@@ -5,13 +5,8 @@ import { contactsContext } from "./contactsContext"
 import { iContact, iContactShort } from "../../interfaces/contacts"
 import { iContactsState } from "../../interfaces/contactsContext"
 import { ActionType } from "../types/contactsTypes"
+import { SERVER_LINK } from "../../utils/default"
 
-const SERVERS = {
-	'LOCALHOST': 'http://localhost:3040/api/contacts',
-	'HTTPS':     'https://albal.fun:3043/api/contacts',
-	'HTTP':      'http://albal.fun:3040/api/contacts'
-}
-const URL = SERVERS['LOCALHOST']
 
 export const ContactsState: React.FC = ({ children }) => {
 	const initialContactsState: iContactsState = {
@@ -26,7 +21,7 @@ export const ContactsState: React.FC = ({ children }) => {
 
 	const fetchContacts = async () => {
 		showLoader()
-		await axios.get<iContact[]>(URL).then(response => {
+		await axios.get<iContact[]>(SERVER_LINK).then(response => {
 			const payload = response.data
 			dispatch({type: ActionType.FETCH_CONTACTS, payload})
 			
@@ -36,7 +31,7 @@ export const ContactsState: React.FC = ({ children }) => {
 
 	const updateContact = async (uContact: iContact) => {
 		try {
-			const nContact = await axios.put<iContact>(`${URL}/${uContact._id}`, uContact)
+			const nContact = await axios.put<iContact>(`${SERVER_LINK}/${uContact._id}`, uContact)
 			const payload = nContact.data
 			dispatch({type: ActionType.UPDATE_CONTACT, payload})
 		} catch(e) {
@@ -46,7 +41,7 @@ export const ContactsState: React.FC = ({ children }) => {
 
 	const addContact = async (aContact: iContactShort) => {
 		try {
-			const nContact = await axios.post<iContact>(URL, aContact)
+			const nContact = await axios.post<iContact>(SERVER_LINK, aContact)
 			const payload = nContact.data
 			dispatch({type: ActionType.ADD_CONTACT, payload})
 		} catch(e) {
@@ -56,7 +51,7 @@ export const ContactsState: React.FC = ({ children }) => {
 
 	const removeContact = async (id: string) => {
 		try {
-			await axios.delete(`${URL}/${id}`).then(() => {
+			await axios.delete(`${SERVER_LINK}/${id}`).then(() => {
 				dispatch({type: ActionType.REMOVE_CONTACT, payload: id})
 			})
 		} catch(e) {
