@@ -11,7 +11,7 @@ const SERVERS = {
 	'HTTPS':     'https://albal.fun:3043/api/contacts',
 	'HTTP':      'http://albal.fun:3040/api/contacts'
 }
-const URL = SERVERS['HTTPS']
+const URL = SERVERS['LOCALHOST']
 
 export const ContactsState: React.FC = ({ children }) => {
 	const initialContactsState: iContactsState = {
@@ -40,7 +40,7 @@ export const ContactsState: React.FC = ({ children }) => {
 			const payload = nContact.data
 			dispatch({type: ActionType.UPDATE_CONTACT, payload})
 		} catch(e) {
-			throw new Error(e)
+			// throw new Error(e)
 		}
 	}
 
@@ -50,7 +50,7 @@ export const ContactsState: React.FC = ({ children }) => {
 			const payload = nContact.data
 			dispatch({type: ActionType.ADD_CONTACT, payload})
 		} catch(e) {
-			throw new Error(e)
+			// throw new Error(e)
 		}
 	}
 
@@ -60,7 +60,7 @@ export const ContactsState: React.FC = ({ children }) => {
 				dispatch({type: ActionType.REMOVE_CONTACT, payload: id})
 			})
 		} catch(e) {
-			throw new Error(e)
+			// throw new Error(e)
 		}
 	}
 

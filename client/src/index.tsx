@@ -3,16 +3,16 @@ import { render } from 'react-dom'
 import { App } from './App'
 import { AlertState } from './context/alert/AlertState'
 import { ContactsState } from './context/contacts/ContactsState'
-import { GQLContactsState } from './context/contacts/GQLContactsState'
+// import { GQLContactsState } from './context/contacts/GQLContactsState'
 import './assets/scss/index.scss'
 
 render(
-  <GQLContactsState>
-  {/* <ContactsState> */}
+  <ContactsState>
+    {/* <GQLContactsState> */}
     <AlertState>
       <App />
     </AlertState>
-  {/* </ContactsState>, */}
-  </GQLContactsState>,
+    {/* </GQLContactsState>, */}
+  </ContactsState>,
   document.getElementById('root')
 )

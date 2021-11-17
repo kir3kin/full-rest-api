@@ -1,11 +1,13 @@
-import express from 'express'
-import cors from 'cors'
-import http from 'http'
-import https from 'https'
-import { credentials } from './keys/credentials.js'
+const express = require('express')
+const cors = require('cors')
+const http = require('http')
+// import https from 'https'
+// import { credentials } from './keys/credentials.js'
 
-import contactsRouter from './routes/contactsRouter.js'
-import {graphUrl, graphHttp} from './routes/gContactsRouter.js'
+const contactsRouter = require('./routes/contactsRouter.js')
+// import {graphUrl, graphHttp} from './routes/gContactsRouter.js'
+const path = require('path')
+
 
 const PORTS = {
 	'HTTP': 3040,
@@ -18,11 +20,21 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Routers
-app.use(contactsRouter)// REST API
-app.use(graphUrl, graphHttp)// GraphQL API
+app.use('/api/contacts', contactsRouter)// REST API
+// app.use(graphUrl, graphHttp)// GraphQL
+
+// To start react-app on server
+const buildPath = path.join(__dirname, '..', 'client', 'build')
+app.use('/', express.static(buildPath))
+app.get('/*', function (req, res) {
+res.sendFile(path.join(buildPath, 'index.html'))
+})
+
 
 const httpServer = http.createServer(app)
-const httpsServer = https.createServer(credentials, app)
+// const httpsServer = https.createServer(credentials, app)
 
-httpServer.listen(PORTS['HTTP'], () => {})
-httpsServer.listen(PORTS['HTTPS'], () => {})
+httpServer.listen(PORTS['HTTP'], () => {
+	console.log(`HTTP server has been started on ${PORTS.HTTP}`)
+})
+// httpsServer.listen(PORTS['HTTPS'], () => {})

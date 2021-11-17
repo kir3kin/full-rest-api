@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 const { Schema, model } = mongoose
 
 const schema = new Schema({
@@ -11,4 +11,6 @@ const schema = new Schema({
 		required: true
 	}
 })
-export const Contacts = model('Contacts', schema)
+const Contacts = model('Contacts', schema)
+
+module.exports = Contacts
