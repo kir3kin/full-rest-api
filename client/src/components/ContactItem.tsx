@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { contactsContext } from "../context/contacts/contactsContext"
 import { alertContext } from "../context/alert/alertContext"
 import { alertMessageType, alertText } from "../interfaces/alertContext"
-import avatar from '../assets/images/avatar-placeholder.png'
+import placeholderImg from '../assets/images/avatar-placeholder.png'
 import { SERVER_IMAGES } from "../utils/default"
 
 export const ContactItem: React.FC<{contact: iContact}> = ({
@@ -23,7 +23,7 @@ export const ContactItem: React.FC<{contact: iContact}> = ({
 		}
 	}
 
-	const image = contact.image ? SERVER_IMAGES + contact.image : avatar
+	const image = contact.image ? SERVER_IMAGES + contact.image : placeholderImg
 
 	return (
 		<div className="card mb-3" key={contact._id}>
