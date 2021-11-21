@@ -1,6 +1,6 @@
 {
   "name": "restapi_server",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "RestAPI <restapi.kir3kin.site>",
   "main": "server.js",
   "keywords": ["restAPi", "kir3kin.site", "portfolio", "React.js", "TypeScript", "Node.js", "Express.js"],
