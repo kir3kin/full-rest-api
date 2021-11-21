@@ -1,4 +1,5 @@
 import { iContact } from "../../interfaces/contacts"
+import { loadingStatus } from "../../interfaces/contactsContext"
 
 export enum ActionType {
 	FETCH_CONTACTS,
@@ -6,13 +7,18 @@ export enum ActionType {
 	REMOVE_CONTACT,
 	ADD_CONTACT,
 	UPDATE_CONTACT,
-	SHOW_LOADER,
-	HIDE_LOADER
+	CHANGE_CONTACT_STATUS,
+	CHANGE_CONTACTS_STATUS
 }
 // actions
 export interface fetchContacts {
 	type: ActionType.FETCH_CONTACTS,
 	payload: iContact[]
+}
+
+export interface fetchContact {
+	type: ActionType.FETCH_CONTACT,
+	payload: iContact | null
 }
 
 export interface removeContact {
@@ -30,12 +36,16 @@ export interface updateContact {
 	payload: iContact
 }
 
-export interface showLoader {
-	type: ActionType.SHOW_LOADER
+export interface changeContactStatus {
+	type: ActionType.CHANGE_CONTACT_STATUS
+	payload: loadingStatus
 }
 
-export interface hideLoader {
-	type: ActionType.HIDE_LOADER
+export interface changeContactsStatus {
+	type: ActionType.CHANGE_CONTACTS_STATUS
+	payload: loadingStatus
 }
 
-export type ContactsActions = fetchContacts | removeContact | addContact | updateContact | showLoader | hideLoader
+
+
+export type ContactsActions = fetchContacts | fetchContact | removeContact | addContact | updateContact | changeContactStatus | changeContactsStatus

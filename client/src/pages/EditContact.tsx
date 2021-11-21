@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { useHistory, useParams } from "react-router-dom"
 import { ContactsLoader } from "../components/ContactsLoader"
 import { EditContactItem } from "../components/EditContactItem"
@@ -7,9 +7,15 @@ import { contactsContext } from "../context/contacts/contactsContext"
 export const EditContact: React.FC = () => {
 	const history = useHistory()
 	const {id: contactId} = useParams<{id: string}>()
-	const { contacts } = useContext(contactsContext)
-	const actualContact = contacts.find(c => c._id === contactId)
-	
+
+	const { contactStatus: status, contact, fetchContact } = useContext(contactsContext)
+
+	useEffect(() => {
+		fetchContact(contactId)
+  }, [])
+
+	if (status === 'failed') history.goBack()
+
 	return (
 		<>
 			<div className="row">
@@ -22,11 +28,13 @@ export const EditContact: React.FC = () => {
 				</div>
 			</div>
 			<hr className="my-4" />
-			{( actualContact && Object.keys(actualContact).length && actualContact._id === contactId) ? (
-			<EditContactItem
-			edContact={actualContact}
-			/>
-			) : (<ContactsLoader />) }
+			{status === 'loading' && <ContactsLoader />}
+			{status === 'idle' && contact !== null && (
+				<EditContactItem
+					edContact={contact}
+					id={contactId}
+				/>
+			)}
 		</>
 	)
 }

@@ -24,5 +24,6 @@ export enum alertText {
 	CONTACT_UPDATE_FAILED = 'Contact has not been updated!',
 	CONTACT_DELETE = 'Contact has been deleted!',
 	CONTACT_DELETE_FAILED = 'Contact has not been deleted!',
+	CONTACT_IMAGE = 'The image size should be less than 1 MB!',
 	DEFAULT = ''
 }

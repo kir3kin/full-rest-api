@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
 import { ContactItem } from "../components/ContactItem"
@@ -6,10 +6,12 @@ import { ContactsLoader } from "../components/ContactsLoader"
 import { contactsContext } from "../context/contacts/contactsContext"
 import '../assets/scss/Contact.scss'
 
-
 export const ListContact: React.FC = () => {
+  const { contacts, contactsStatus: status, fetchContacts } = useContext(contactsContext)
 
-  const { contacts, loading } = useContext(contactsContext)
+  useEffect(() => {
+    fetchContacts()
+  }, [])
 
 	return (
 		<>
@@ -20,26 +22,28 @@ export const ListContact: React.FC = () => {
         </div>
       </div>
       <hr className="my-4" />
-
-			{contacts.length ? (
-				<TransitionGroup>
-					{contacts.map(contact => {
-						return (
-							<CSSTransition
-								key={contact._id}
-								timeout={400}
-								classNames={'contact-item'}
-							>
-								<ContactItem
-								contact={contact}
-								/>
-							</CSSTransition>
-						)
-					})}
-				</TransitionGroup>
-			) : (loading ?
-				<ContactsLoader /> :
-				<p>There are no contacts!</p>
+			
+			{status === 'failed' && (<p>Cannot get contacts!</p>)}
+			{status === 'loading' && <ContactsLoader />}
+			{status === 'idle' && ( contacts.length ? (
+					<TransitionGroup>
+						{contacts.map(contact => {
+							return (
+								<CSSTransition
+									key={contact._id}
+									timeout={400}
+									classNames={'contact-item'}
+								>
+									<ContactItem
+									contact={contact}
+									/>
+								</CSSTransition>
+							)
+						})}
+					</TransitionGroup>
+				) : (
+					<p>There are no contacts!</p>
+				)
 			)}
 		</>
 	)

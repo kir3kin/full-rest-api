@@ -8,7 +8,12 @@ const schema = new Schema({
 	},
 	email: {
 		type: String,
-		required: true
+		required: true,
+		unique: true,
+		dropDups: true
+	},
+	image: {
+		type: String
 	}
 })
 const Contacts = model('Contacts', schema)

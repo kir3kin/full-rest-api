@@ -1,8 +1,10 @@
 {
-  "name": "restapi",
-  "version": "1.0.0",
-  "description": "RestAPI(graphql)",
+  "name": "restapi_server",
+  "version": "1.2.0",
+  "description": "RestAPI <restapi.kir3kin.site>",
   "main": "server.js",
+  "keywords": ["restAPi", "kir3kin.site", "portfolio", "React.js", "TypeScript", "Node.js", "Express.js"],
+  "author": "Ihor Akhabanin <i.akhabanin@gmail.com>",
   "scripts": {
     "start": "cross-env NODE_ENV=production node server.js",
     "dev": "nodemon server.js",
@@ -11,8 +13,6 @@
     "client:build": "npm run build --prefix ../client"
   },
   "type": "commonjs",
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.12"
@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.1",
     "mongoose": "^5.13.5",

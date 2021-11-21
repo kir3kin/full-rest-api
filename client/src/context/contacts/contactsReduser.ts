@@ -9,6 +9,9 @@ export const contactsReducer = (
 		case ActionType.FETCH_CONTACTS: {
 			return { ...state, contacts: action.payload }
 		}
+		case ActionType.FETCH_CONTACT: {
+			return { ...state, contact: action.payload }
+		}
 		case ActionType.ADD_CONTACT: {
 			return {
 				...state,
@@ -34,11 +37,11 @@ export const contactsReducer = (
 				})
 			}
 		}
-		case ActionType.SHOW_LOADER: {
-			return { ...state, loading: true }
+		case ActionType.CHANGE_CONTACT_STATUS: {
+			return { ...state, contactStatus: action.payload }
 		}
-		case ActionType.HIDE_LOADER: {
-			return { ...state, loading: false }
+		case ActionType.CHANGE_CONTACTS_STATUS: {
+			return { ...state, contactsStatus: action.payload }
 		}
 		default: return state
 	}

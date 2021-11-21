@@ -6,7 +6,7 @@ import { contactsContext } from "../context/contacts/contactsContext"
 import { alertContext } from "../context/alert/alertContext"
 import { alertMessageType, alertText } from "../interfaces/alertContext"
 import avatar from '../assets/images/avatar-placeholder.png'
-
+import { SERVER_IMAGES } from "../utils/default"
 
 export const ContactItem: React.FC<{contact: iContact}> = ({
 	contact
@@ -23,13 +23,15 @@ export const ContactItem: React.FC<{contact: iContact}> = ({
 		}
 	}
 
+	const image = contact.image ? SERVER_IMAGES + contact.image : avatar
+
 	return (
 		<div className="card mb-3" key={contact._id}>
 			<div className="card-body">
 				<div className="row">
 					<div className="col-9 d-flex flex-row align-items-center">
 						<div className="contact-image me-3">
-							<img src={avatar} className="w-100 h-100" alt="avatar" />
+							<img src={image} className="w-100 h-100" alt="avatar" />
 						</div>
 						<div>
 							<h5
