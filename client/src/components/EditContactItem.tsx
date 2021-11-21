@@ -3,9 +3,9 @@ import { alertContext } from "../context/alert/alertContext"
 import { contactsContext } from "../context/contacts/contactsContext"
 import { alertMessageType, alertText } from "../interfaces/alertContext"
 import { iContact } from "../interfaces/contacts"
-import avatar from "../assets/images/avatar-placeholder.png"
 import { MAX_SIZE, SERVER_IMAGES } from "../utils/default"
 import { useHistory } from "react-router"
+import placeholderImg from "../assets/images/avatar-placeholder.png"
 
 type editContactItemProps = {
 	edContact: iContact
@@ -30,7 +30,7 @@ export const EditContactItem: React.FC<editContactItemProps> = ({
 	const defaultFileName = 'Choose image'
 	const defaultImage = {
 		display: true,
-    path: contact.image ? SERVER_IMAGES + contact.image : avatar
+    path: contact.image ? SERVER_IMAGES + contact.image : placeholderImg
   }
 
 	const [image, setImage] = useState<imageFile>(defaultImage)
