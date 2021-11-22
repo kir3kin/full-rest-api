@@ -16,9 +16,9 @@ export const ListContact: React.FC = () => {
 	return (
 		<>
       <div className="row">
-        <h2 className="col-6 mb-0">Contact List</h2>
-        <div className="col-6 d-flex justify-content-end">
-          <Link to='/add-contact' className="btn px-4 btn-primary">Add Contact</Link>
+        <h2 className="col-sm-6 mb-sm-0 mb-4 text-center text-sm-start">Contact List</h2>
+        <div className="col-sm-6 mb-sm-0 mb-2 d-flex justify-content-center justify-content-sm-end">
+          <Link to='/add-contact' className="btn btn-primary px-sm-4 py-2 py-sm-1 px-5">Add Contact</Link>
         </div>
       </div>
       <hr className="my-4" />

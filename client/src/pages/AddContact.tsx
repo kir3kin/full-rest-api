@@ -72,10 +72,10 @@ export const AddContact: React.FC = () => {
 	return (
 		<>
 		<div className="row">
-			<h2 className="col-6 mb-0">Add contact</h2>
-			<div className="col-6 d-flex justify-content-end">
+			<h2 className="col-sm-6 mb-sm-0 mb-4 text-center text-sm-start">Add contact</h2>
+			<div className="col-sm-6 mb-sm-0 mb-2 d-flex justify-content-center justify-content-sm-end">
         <button
-          className="btn px-3 btn-danger"
+          className="btn px-sm-3 py-2 py-sm-1 px-4 btn-danger"
           onClick={() => { history.goBack() }}
         >Back</button>
       </div>
@@ -83,7 +83,7 @@ export const AddContact: React.FC = () => {
     <hr className="my-4" />
 		<form
         onSubmit={submitHandler}
-        className="custom-form"
+        className="custom-form mb-4 text-sm-start text-center"
       >
         <div>
           <div className="form-floating mb-3">
@@ -119,13 +119,12 @@ export const AddContact: React.FC = () => {
           />
           <label
             htmlFor="image"
-            className="custom-file__label"
+            className="custom-file__label text-start mb-2 mb-sm-0"
           >{fileName.length > 0 ? fileName : defaultFileName}</label>
         </div>
-
         <button
           type="submit"
-          className="btn btn-primary px-3"
+          className="btn btn-primary px-sm-3 py-2 py-sm-1 px-4 text-center"
           disabled={!canCreate()}
         >Add</button>
       </form>

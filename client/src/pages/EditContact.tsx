@@ -19,11 +19,11 @@ export const EditContact: React.FC = () => {
 	return (
 		<>
 			<div className="row">
-				<h2 className="col-6 mb-0">Edit contact</h2>
-				<div className="col-6 d-flex justify-content-end">
+				<h2 className="col-sm-6 mb-sm-0 mb-4 text-center text-sm-start">Edit contact</h2>
+				<div className="col-sm-6 mb-sm-0 mb-2 d-flex justify-content-center justify-content-sm-end">
 					<button
 						onClick={() => { history.goBack() }}
-						className="btn px-3 btn-danger"
+						className="btn btn-danger px-sm-3 py-2 py-sm-1 px-4"
 					>Back</button>
 				</div>
 			</div>

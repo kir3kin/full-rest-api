@@ -97,6 +97,7 @@ export const EditContactItem: React.FC<editContactItemProps> = ({
 	return (
 		<>
 		<form
+			className="mb-4 text-sm-start text-center"
 			onSubmit={submitHandler}
 		>
 			<div className="form-floating mb-3">
@@ -137,12 +138,12 @@ export const EditContactItem: React.FC<editContactItemProps> = ({
 				)}
 				<label
 					htmlFor="image"
-					className="custom-file__label"
+					className="custom-file__label text-truncate mb-sm-0 mb-3 text-start"
 				>{fileName ? fileName : defaultFileName}</label>
 			</div>
 			<button
 				type="submit"
-				className="btn btn-primary px-3"
+				className="btn btn-primary px-sm-3 py-2 py-sm-1 px-4"
 				disabled={!canUpdate()}
 			>Update</button>
 		</form>
