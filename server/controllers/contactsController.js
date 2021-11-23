@@ -13,7 +13,7 @@ class ContactsController {
 		return !!req.files?.image
 	}
 
-	static createImg = (req, imageName) => {
+	static createImg = async (req, imageName) => {
 		if (this.checkImage(req)) {
 			const { image } = req.files
 			image.mv(path.join(this.imagePath, imageName))
@@ -58,7 +58,7 @@ class ContactsController {
 			})
 	
 			const newContact = await contact.save()
-			this.createImg(req, image)
+			await this.createImg(req, image)
 
 			res.status(201).json(newContact)
 		} catch (e) {
@@ -71,6 +71,7 @@ class ContactsController {
 	static updateContact = async (req, res) => {
 		try {
 			const newImage = this.checkImage(req) ? `${uuid.v4()}.jpg` : ''
+			const currentImage = req.body.image
 			let prevImage
 			
 			const temp = await Contacts.findById(req.params.id)
@@ -79,14 +80,14 @@ class ContactsController {
 			const update = {
 				name: req.body.name,
 				email: req.body.email,
-				image: newImage
+				image: currentImage ? currentImage : newImage
 			}
 			
 			const contact = await Contacts.findByIdAndUpdate(req.params.id, update, {new: true})
 
-			if (contact !== null) {
+			if (contact !== null && currentImage !== prevImage) {
 				this.deleteImg(prevImage)
-				this.createImg(req, newImage)
+				await this.createImg(req, newImage)
 			}
 
 			res.status(200).json(contact)
@@ -110,8 +111,6 @@ class ContactsController {
 			})
 		}
 	}
-
-
 }
 	
 module.exports = ContactsController
