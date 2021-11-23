@@ -40,13 +40,16 @@ export const EditContactItem: React.FC<editContactItemProps> = ({
 	const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault()
 
-		if (
-      (typeof contact.image === 'object') &&
-      (contact.image.size > MAX_SIZE)
-    ) { 
-      show(alertText.CONTACT_IMAGE, alertMessageType.DANGER)
-      return
-    }
+		if (typeof contact.image === 'object') {
+			if (!(/^image\/(jpe?g|png)$/.test(contact.image.type))) {
+				show(alertText.CONTACT_IMAGE_TYPE, alertMessageType.DANGER)
+				return
+			}
+			if (contact.image.size > MAX_SIZE) {
+				show(alertText.CONTACT_IMAGE_SIZE, alertMessageType.DANGER)
+				return
+			}
+		}
 
 		try {
 			const sendData = new FormData()
